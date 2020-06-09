@@ -1,7 +1,8 @@
 module Main exposing (main)
 
 import Html exposing (div, text)
+import BST exposing (..)
 
 
 main =
-    div [] [ text "hi" ]
+    div [] [ text "Binary Search Tree" ]

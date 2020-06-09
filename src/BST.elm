@@ -12,8 +12,10 @@ import Html exposing (a)
   - a mother with two children, where the children are binary trees
 
 -}
+
 type BST a
-    = Leaf a
+    = EmptySlot
+    | Leaf a
     | Mother a (BST a) (BST a)
 
 
@@ -49,12 +51,29 @@ myTree =
             (Leaf 2)
         )
 
+tree : BST Int
+tree = Leaf 1
+
 
 insert : a -> BST a -> BST a
 insert val bst =
-    Debug.todo ""
+    case bst of
+        EmptySlot -> Leaf val
+        Leaf a -> Mother a (create val) EmptySlot
+        -- case matching for Mother to check if it should insert left or right
+        Mother a treeLeft treeRight -> Mother a (insert val treeLeft) (insert val treeRight)
 
 
 member : a -> BST a -> Bool
-member a bst =
-    Debug.todo ""
+member val bst =
+    case bst of
+        EmptySlot -> False
+        Leaf a -> val == a
+        Mother a treeLeft treeRight ->
+            if a == val then
+                True
+            else if member val treeLeft then
+                True
+            else if  member val treeRight then
+                True
+            else False
